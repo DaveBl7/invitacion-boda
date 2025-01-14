@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de Boda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffe5e0;
+            padding: 20px;
+        }
+
+        header h1 {
+            color: #d9534f;
+            margin: 0;
+        }
+
+        .details {
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        .countdown {
+            font-size: 2rem;
+            color: #d9534f;
+        }
+
+        .map {
+            margin: 20px 0;
+        }
+
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: 0;
+        }
+
+        .rsvp {
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .rsvp input,
+        .rsvp button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .rsvp button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .music {
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>¡Nos Casamos!</h1>
+        <p>[Nombre1] & [Nombre2]</p>
+    </header>
+
+    <div class="details">
+        <p><strong>Fecha:</strong> [Día/Mes/Año]</p>
+        <p><strong>Hora:</strong> [Hora]</p>
+        <p><strong>Lugar:</strong> [Nombre del lugar]</p>
+    </div>
+
+    <div class="countdown" id="countdown"></div>
+
+    <div class="map">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.911236618429!2d-122.08424948446954!3d37.42199997982595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fbbfd6d4ff4f9%3A0xb2c23b4ddf8fbd8!2sGoogleplex!5e0!3m2!1sen!2sus!4v1698277296224!5m2!1sen!2sus"
+            allowfullscreen="" loading="lazy">
+        </iframe>
+    </div>
+
+    <div class="rsvp">
+        <h2>Confirma tu asistencia</h2>
+        <form>
+            <input type="text" placeholder="Tu nombre" required>
+            <input type="number" placeholder="Número de acompañantes" min="0" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <div class="music">
+        <audio controls>
+            <source src="tu-cancion.mp3" type="audio/mpeg">
+            Tu navegador no soporta el reproductor de audio.
+        </audio>
+    </div>
+
+    <script>
+        // Cuenta regresiva
+        const targetDate = new Date("2025-12-31T00:00:00").getTime();
+        const countdownEl = document.getElementById("countdown");
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownEl.textContent = `Faltan ${days} días, ${hours} horas, ${minutes} minutos y ${seconds} segundos`;
+
+            if (distance < 0) {
+                countdownEl.textContent = "¡Es el gran día!";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+
+</html>
