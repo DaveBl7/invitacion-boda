@@ -2,138 +2,414 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación de Boda</title>
+    <meta charset="UTF-8" />
+    <title>Invitación de Boda | David & Esme</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Libre+Baskerville:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
+        :root {
+            --paper: #f7f2e8;
+            --gold: #c6a75e;
+            --text: #2f2f2f;
+            --soft: #7a7a7a;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            margin: 0;
+            font-family: 'Libre Baskerville', serif;
+            background: linear-gradient(180deg, #efe8dc, var(--paper));
+            color: var(--text);
             text-align: center;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
         }
 
-        header {
-            background-color: #ffe5e0;
-            padding: 20px;
+        /* PAPEL / PERGAMINO */
+        .paper {
+            max-width: 1100px;
+            margin: 40px auto;
+            background: var(--paper);
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .18);
+            position: relative;
+            overflow: hidden;
         }
 
-        header h1 {
-            color: #d9534f;
-            margin: 0;
+        .paper::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url('img/paper-texture.png');
+            opacity: .25;
+            pointer-events: none;
         }
 
-        .details {
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+        section {
+            padding: 90px 25px;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1.2s ease;
+            position: relative;
+            z-index: 2;
         }
 
-        .countdown {
-            font-size: 2rem;
-            color: #d9534f;
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .map {
-            margin: 20px 0;
+        h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 35px;
         }
 
-        iframe {
+        h2::after {
+            content: "";
+            width: 80px;
+            height: 2px;
+            background: var(--gold);
+            display: block;
+            margin: 18px auto 0;
+        }
+
+        /* CARRUSEL */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            animation: slide 25s infinite;
+        }
+
+        .carousel img {
             width: 100%;
-            height: 300px;
-            border: 0;
+            min-height: 80vh;
+            object-fit: cover;
         }
 
-        .rsvp {
-            margin: 20px auto;
+        @keyframes slide {
+            0% {
+                transform: translateX(0)
+            }
+
+            33% {
+                transform: translateX(-100%)
+            }
+
+            66% {
+                transform: translateX(-200%)
+            }
+
+            100% {
+                transform: translateX(0)
+            }
+        }
+
+        /* NOMBRES */
+        .names {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background: rgba(0, 0, 0, .35);
+        }
+
+        .names h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.2rem;
+            letter-spacing: 3px;
+            animation: fadeNames 2.5s ease forwards;
+        }
+
+        @keyframes fadeNames {
+            from {
+                opacity: 0;
+                transform: translateY(40px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .phrase {
+            font-style: italic;
+            color: var(--soft);
+            max-width: 650px;
+            margin: auto;
+            font-size: 1.1rem;
+        }
+
+        .text {
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* PADRES / ICONOS */
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            font-size: 1.1rem;
+        }
+
+        .icons i {
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* CARRUSEL SIMPLE */
+        .mini-carousel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+        }
+
+        .mini-carousel img {
+            width: 260px;
+            border-radius: 25px;
+            scroll-snap-align: center;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+        }
+
+        /* TIMELINE */
+        .timeline {
             max-width: 600px;
+            margin: auto;
+            text-align: left;
         }
 
-        .rsvp input,
-        .rsvp button {
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 80%;
-            max-width: 400px;
+        .timeline div {
+            padding: 12px 0;
+            border-left: 3px solid var(--gold);
+            padding-left: 20px;
+            margin-left: 10px;
         }
 
-        .rsvp button {
-            background-color: #d9534f;
+        /* DRESS CODE */
+        .dress {
+            color: var(--gold);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .dress-icons {
+            font-size: 2.2rem;
+            color: var(--gold);
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        /* RSVP */
+        form {
+            max-width: 420px;
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        input,
+        select,
+        button {
+            padding: 15px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: .95rem;
+        }
+
+        button {
+            background: var(--gold);
             color: white;
             border: none;
             cursor: pointer;
         }
 
-        .music {
-            margin: 20px;
+        footer {
+            padding: 80px 30px;
+            color: var(--soft);
+            font-size: .95rem;
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>¡Nos Casamos!</h1>
-        <p>[Nombre1] & [Nombre2]</p>
-    </header>
 
-    <div class="details">
-        <p><strong>Fecha:</strong> [Día/Mes/Año]</p>
-        <p><strong>Hora:</strong> [Hora]</p>
-        <p><strong>Lugar:</strong> [Nombre del lugar]</p>
-    </div>
+    <audio controls autoplay loop>
+        <source src="/Users/davidb/Documents/SITIO WEB/img/cancion.wav" type="audio/mpeg">
+    </audio>
 
-    <div class="countdown" id="countdown"></div>
+    <div class="paper">
 
-    <div class="map">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.911236618429!2d-122.08424948446954!3d37.42199997982595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fbbfd6d4ff4f9%3A0xb2c23b4ddf8fbd8!2sGoogleplex!5e0!3m2!1sen!2sus!4v1698277296224!5m2!1sen!2sus"
-            allowfullscreen="" loading="lazy">
-        </iframe>
-    </div>
+        <!-- HERO -->
+        <div class="carousel">
+            <div class="carousel-track">
+                <img src="/Users/davidb/Documents/SITIO WEB/img/img_6350.jpg"><img
+                    src="/Users/davidb/Documents/SITIO WEB/img/img_6638.jpg"><img
+                    src="/Users/davidb/Documents/SITIO WEB/img/img_6721.jpg">
+            </div>
+            <div class="names">
+                <h1>David & Esme</h1>
+                <p id="guestName"></p>
+            </div>
+        </div>
+        <div class="countdown-line" id="countdown">
+            <span><strong id="days">0</strong> días</span>
+            <span>·</span>
+            <span><strong id="hours">0</strong> horas</span>
+            <span>·</span>
+            <span><strong id="minutes">0</strong> min</span>
+            <span>·</span>
+            <span><strong id="seconds">0</strong> seg</span>
+        </div>
 
-    <div class="rsvp">
-        <h2>Confirma tu asistencia</h2>
-        <form>
-            <input type="text" placeholder="Tu nombre" required>
-            <input type="number" placeholder="Número de acompañantes" min="0" required>
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
+        <section>
+            <p class="phrase">“El amor crece cuando se comparte.” — Antoine de Saint-Exupéry</p>
+        </section>
 
-    <div class="music">
-        <audio controls>
-            <source src="tu-cancion.mp3" type="audio/mpeg">
-            Tu navegador no soporta el reproductor de audio.
-        </audio>
+        <section>
+            <p class="text">Con la bendición de Dios y el amor que nos une, queremos compartir con ustedes uno de los
+                días más importantes de nuestras vidas e invitarlos a celebrar nuestra unión.</p>
+        </section>
+
+        <section>
+            <h2>Nuestros Padres</h2>
+            <div class="icons">
+                <div>
+                    <i class="fa-solid fa-user-tie"></i><br>Padres del Novio:
+                    <br>Martín Adrián Beltrán Gil
+                    <br> Pilar Isela Bórquez Rodríguez
+                </div>
+                <div>
+                    <i class="fa-solid fa-person-dress-burst"></i><br>Padres de la Novia:
+                    <br>Jose Antorio Zavala Ruíz
+                    <br>Cecilia Serrano Gómez
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Nuestros Padrinos</h2>
+            <div class="mini-carousel">
+                <img src="img/padrino1.jpg"><img src="img/padrino2.jpg"><img src="img/padrino3.jpg">
+            </div>
+        </section>
+
+        <section>
+            <h2>Itinerario</h2>
+            <div class="timeline">
+                <div><i class="fa-solid fa-heart"></i> 4:30 pm – Recepción</div>
+                <div><i class="fa-solid fa-heart"></i> Ceremonia</div>
+                <div><i class="fa-solid fa-heart"></i> Fotos</div>
+                <div><i class="fa-solid fa-heart"></i> Cena</div>
+                <div><i class="fa-solid fa-heart"></i> Lanzamiento del ramo</div>
+                <div><i class="fa-solid fa-heart"></i> Baile de los novios</div>
+                <div><i class="fa-solid fa-heart"></i> Brindis</div>
+                <div><i class="fa-solid fa-heart"></i> Baile con padres</div>
+                <div><i class="fa-solid fa-heart"></i> Música y dinámicas</div>
+        </section>
+
+        <section>
+            <h2>Dress Code</h2>
+            <p class="dress">Formal<br>El color blanco es exclusivo para la novia</p>
+            <div class="dress-icons">
+                <i class="fa-solid fa-user-tie"></i>
+                <i class="fa-solid fa-person-dress"></i>
+            </div>
+        </section>
+
+        <section>
+            <h2>Mesa de Regalos</h2>
+            <p class="text">Su presencia es nuestro mejor regalo, pero si desean obsequiarnos algo, lo agradeceremos de
+                corazón.</p>
+        </section>
+
+        <section>
+            <img src="img/foto-extra.jpg"
+                style="width:100%;max-width:650px;border-radius:30px;box-shadow:0 20px 40px rgba(0,0,0,.2)">
+        </section>
+
+        <section>
+            <h2>Confirmación de Asistencia</h2>
+            <p class="text">Agradeceremos confirmar su asistencia un mes antes del evento.</p>
+            <form id="rsvpForm">
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                <select name="asistencia" required>
+                    <option value="">¿Asistirá?</option>
+                    <option value="Sí">Sí asistiré</option>
+                    <option value="No">No podré asistir</option>
+                </select>
+                <button type="submit">Confirmar</button>
+            </form>
+            <p id="msg"></p>
+        </section>
+
+        <footer>
+            Con todo nuestro amor, gracias por acompañarnos en este momento tan especial.<br><br>
+            Los queremos y esperamos contar con su presencia <br>♥ ATTE: David & Esme
+        </footer>
+
     </div>
 
     <script>
-        // Cuenta regresiva
-        const targetDate = new Date("2025-12-31T00:00:00").getTime();
-        const countdownEl = document.getElementById("countdown");
+        // INVITADO
+        const p = new URLSearchParams(location.search).get('invitado');
+        if (p) document.getElementById('guestName').innerText = `Querido/a ${p}, estás invitado/a`;
+
+        // SCROLL
+        const sections = document.querySelectorAll('section');
+        const reveal = () => { sections.forEach(s => { if (s.getBoundingClientRect().top < window.innerHeight * 0.85) s.classList.add('visible') }) };
+        window.addEventListener('scroll', reveal); reveal();
+
+        // RSVP
+        const form = document.getElementById('rsvpForm');
+        form.addEventListener('submit', e => {
+            e.preventDefault(); fetch('PEGA_AQUI_URL_DE_GOOGLE_SCRIPT', { method: 'POST', body: new FormData(form) })
+                .then(() => msg.innerText = '¡Gracias por confirmar!').catch(() => msg.innerText = 'Error al enviar')
+        });
+    </script>
+    <script>
+        const weddingDate = new Date("October 30, 2026 16:30:00").getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
-            const distance = targetDate - now;
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "¡Hoy es el gran día! 💍";
+                return;
+            }
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            countdownEl.textContent = `Faltan ${days} días, ${hours} horas, ${minutes} minutos y ${seconds} segundos`;
-
-            if (distance < 0) {
-                countdownEl.textContent = "¡Es el gran día!";
-            }
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
         }
 
+        updateCountdown();
         setInterval(updateCountdown, 1000);
     </script>
 </body>
